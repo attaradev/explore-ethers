@@ -29,19 +29,19 @@ const wallet3 = new Wallet(PRIVATE_KEY_3, provider);
     utils.formatEther(await wallet3.getBalance())
   );
 
-  // const tx0 = await wallet1.sendTransaction({
+  //   const tx0 = await wallet1.sendTransaction({
   //     value: utils.parseEther(".5"),
   //     to: wallet2.address,
-  // })
-  // const tx1 = await wallet1.sendTransaction({
+  //   });
+  //   const tx1 = await wallet1.sendTransaction({
   //     value: utils.parseEther(".5"),
   //     to: wallet2.address,
-  // })
+  //   });
 
-  // const tx2 = await wallet1.sendTransaction({
+  //   const tx2 = await wallet1.sendTransaction({
   //     value: utils.parseEther("5"),
   //     to: wallet2.address,
-  // })
+  //   });
 
   await payroll(0.3, wallet1, [wallet2.address, wallet3.address]);
 
@@ -57,6 +57,19 @@ const wallet3 = new Wallet(PRIVATE_KEY_3, provider);
     "after balance wallet3: ",
     utils.formatEther(await wallet3.getBalance())
   );
+
+  //   wallet1.sendTransaction({
+  //     value: utils.parseEther("1"),
+  //     to: wallet2.address,
+  //   });
+
+  //   wallet1.sendTransaction({
+  //     value: utils.parseEther("1"),
+  //     to: wallet3.address,
+  //   });
+
+  const addresses = await findAddresses(wallet1.address);
+  console.log("addresses", addresses);
 })();
 
 // TODO
