@@ -91,6 +91,14 @@ assignment
 
 async function findAddresses(address) {
   const blockNumber = await provider.getBlockNumber();
+  while (blockNumber > 0) {
+    const addresses = await findAddressesInBlock(address, blockNumber);
+    if (addresses.length > 0) return addresses;
+    blockNumber--;
+  }
+  return [];
+}
+async function findAddressesInBlock(address, blockNumber) {
   const block = await provider.getBlockWithTransactions(blockNumber);
   return block.transactions
     .filter((tx) => tx.from == address)
