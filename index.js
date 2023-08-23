@@ -90,18 +90,24 @@ assignment
 */
 
 async function findAddresses(address) {
-  const blockNumber = await provider.getBlockNumber();
+  let blockNumber = await provider.getBlockNumber();
+  let addresses = [];
+
   while (blockNumber > 0) {
-    const addresses = await findAddressesInBlock(address, blockNumber);
-    if (addresses.length > 0) return addresses;
+    const addressesInBlock = await findAddressesInBlock(address, blockNumber);
+    if (addressesInBlock.length > 0) {
+      addresses = addresses.concat(addressesInBlock);
+    }
     blockNumber--;
   }
-  return [];
+
+  return addresses;
 }
 async function findAddressesInBlock(address, blockNumber) {
   const block = await provider.getBlockWithTransactions(blockNumber);
+
   return block.transactions
-    .filter((tx) => tx.from == address)
+    .filter((tx) => tx.from === address)
     .map((tx) => tx.to);
 }
 
